@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Bit Visualizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    .number-line-container {
+      position: relative;
+      margin: 50px auto;
+      width: 500px;
+    }
+    .number-line {
+      width: 500px;
+      height: 4px;
+      background-color: #000;
+      margin: 20px auto;
+      position: relative;
+    }
+    .slider {
+      width: 500px;
+      margin: 20px auto;
+    }
+    .dot {
+      width: 20px;
+      height: 20px;
+      background-color: #007bff;
+      border-radius: 50%;
+      position: absolute;
+      top: -10px;
+      transform: translate(-50%, 0);
+    }
+    .label {
+      font-size: 18px;
+      font-weight: bold;
+      position: absolute;
+      top: -30px;
+    }
+    .label-left {
+      left: 0;
+    }
+    .label-right {
+      right: 0;
+    }
+    .probabilities {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    .state-equation {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quantum Bit Visualizer</h1>
+  <div class="number-line-container">
+    <div class="label label-left">0</div>
+    <div class="label label-right">1</div>
+    <div class="number-line">
+      <div class="dot" id="dot" style="left: 0%;"></div>
+    </div>
+  </div>
+  <input type="range" class="slider" id="slider" min="0" max="100" value="50" oninput="updateDot()">
+  <div class="probabilities" id="probabilities">
+    Probability of 0: 50% | Probability of 1: 50%
+  </div>
+  <div class="state-equation" id="state-equation">
+    |ψ⟩ = 0.50|0⟩ + 0.50|1⟩
+  </div>
+
+  <script>
+    function updateDot() {
+      const slider = document.getElementById('slider');
+      const dot = document.getElementById('dot');
+      const probabilities = document.getElementById('probabilities');
+      const stateEquation = document.getElementById('state-equation');
+
+      const prob0 = (slider.value / 100).toFixed(2); // Probability of 0 (slider value as a decimal)
+      const prob1 = (1 - prob0).toFixed(2); // Probability of 1
+
+      // Update dot position
+      dot.style.left = `${prob0 * 100}%`;
+
+      // Update probabilities display
+      probabilities.textContent = `Probability of 0: ${(prob0 * 100).toFixed(0)}% | Probability of 1: ${(prob1 * 100).toFixed(0)}%`;
+
+      // Update state equation display
+      stateEquation.textContent = `|ψ⟩ = ${prob0}|0⟩ + ${prob1}|1⟩`;
+    }
+  </script>
+</body>
+</html>
