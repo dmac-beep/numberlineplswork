@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symmetric Encryption Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .output {
+      margin-top: 20px;
+      text-align: left;
+    }
+    .output p {
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Symmetric Encryption Example</h1>
+    <p>Input text to encrypt, and see step-by-step explanations of the encryption process:</p>
+    <input type="text" id="plaintext" placeholder="Enter your text here">
+    <input type="number" id="key" placeholder="Enter a numerical key (1-25)" min="1" max="25">
+    <button onclick="encrypt()">Encrypt</button>
+    <div class="output">
+      <h3>Encryption Steps:</h3>
+      <p><strong>Step 1: Original Text:</strong> <span id="originalText"></span></p>
+      <p><strong>Step 2: Numerical Representation:</strong> <span id="numericalForm"></span></p>
+      <p><strong>Step 3: Apply Key:</strong> <span id="keyExplanation"></span></p>
+      <p><strong>Step 4: Encrypted Text:</strong> <span id="cipherText"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function encrypt() {
+      const plaintext = document.getElementById('plaintext').value;
+      const key = parseInt(document.getElementById('key').value);
+
+      if (!plaintext || isNaN(key) || key < 1 || key > 25) {
+        alert('Please enter valid text and a key between 1 and 25.');
+        return;
+      }
+
+      const numericalForm = [];
+      const keyExplanation = [];
+      const cipherText = [];
+
+      // Convert plaintext to numerical form and encrypt
+      for (let char of plaintext) {
+        if (char.match(/[a-z]/i)) {
+          // Convert letter to numerical value (A=0, B=1, ..., Z=25)
+          const isUpperCase = char === char.toUpperCase();
+          const base = isUpperCase ? 65 : 97;
+          const num = char.charCodeAt(0) - base;
+          numericalForm.push(num);
+
+          // Encrypt using the key
+          const cipherNum = (num + key) % 26;
+          cipherText.push(String.fromCharCode(cipherNum + base));
+          keyExplanation.push(`${char} (${num}) + ${key} → ${(cipherNum)} (${String.fromCharCode(cipherNum + base)})`);
+        } else {
+          // For non-alphabet characters, keep them unchanged
+          numericalForm.push(char);
+          cipherText.push(char);
+          keyExplanation.push(`${char} (unchanged)`);
+        }
+      }
+
+      // Update the results in the HTML
+      document.getElementById('originalText').textContent = plaintext;
+      document.getElementById('numericalForm').textContent = numericalForm.join(', ');
+      document.getElementById('keyExplanation').textContent = keyExplanation.join(' | ');
+      document.getElementById('cipherText').textContent = cipherText.join('');
+    }
+  </script>
+</body>
+</html>
