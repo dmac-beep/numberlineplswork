@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classical Bit Visualizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    .number-line-container {
+      position: relative;
+      margin: 50px auto;
+      width: 500px;
+    }
+    .number-line {
+      width: 500px;
+      height: 4px;
+      background-color: #000;
+      margin: 0 auto;
+      position: relative;
+    }
+    .dot {
+      width: 20px;
+      height: 20px;
+      background-color: #007bff;
+      border-radius: 50%;
+      position: absolute;
+      top: -10px;
+      left: 0;
+      transition: left 0.3s ease;
+    }
+    .label {
+      font-size: 18px;
+      font-weight: bold;
+      position: absolute;
+      top: -30px;
+    }
+    .label-left {
+      left: 0;
+    }
+    .label-right {
+      right: 0;
+    }
+    .button-container {
+      margin-top: 20px;
+    }
+    button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Classical Bit Visualizer</h1>
+  <div class="number-line-container">
+    <div class="label label-left">0</div>
+    <div class="label label-right">1</div>
+    <div class="number-line">
+      <div class="dot" id="dot"></div>
+    </div>
+  </div>
+  <div class="button-container">
+    <button onclick="moveDot(0)">0</button>
+    <button onclick="moveDot(1)">1</button>
+  </div>
+  <script>
+    function moveDot(state) {
+      const dot = document.getElementById('dot');
+      dot.style.left = state === 0 ? '0px' : '480px'; // Adjust for the new width of 500px
+    }
+  </script>
+</body>
+</html>
